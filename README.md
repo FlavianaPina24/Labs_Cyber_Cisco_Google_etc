@@ -29,5 +29,5 @@ Biblioteca prática e documentação técnica dos laboratórios de **Cyber Defen
 
 1. Clone o repositório em uma distribuição Linux (Kali Linux / Ubuntu):
 ```bash
-git clone [https://github.com/FlavianaPina24/Labs_Cyber_Cisco_Google_etc.git](https://github.com/FlavianaPina24/Labs_Cyber_Cisco_Google_etc.git)
+git clone https://github.com/FlavianaPina24/Labs_Cyber_Cisco_Google_etc.git
 cd Labs_Cyber_Cisco_Google_etc
