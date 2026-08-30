@@ -1,37 +1,27 @@
-# 🛡️ Hands-on: Host-based Firewall & Packet Filtering with iptables (Linux Security)
+# 📚 Cyber Defense & SOC Security Labs Library
 
-Repositório com a documentação técnica, comandos de configuração e validação prática de regras de firewall no Linux utilizando **Netfilter/iptables** para cenários de **Cyber Defense**, **Blue Team** e **Resposta a Incidentes (Contenção de Ameaças)**.
-
----
-
-## 🎯 Objetivos do Laboratório
-
-- Implementar regras de filtragem nas camadas de **Rede (ICMP)** e **Transporte (TCP/UDP)**.
-- Configurar arquitetura de firewall baseada em estado (**Stateful Firewall**) utilizando o módulo `conntrack`.
-- Garantir a integridade de serviços locais via interface de **Loopback (`lo`)**.
-- Aplicar regras com políticas de descarte silencioso (**DROP**) para mitigação de varreduras e tentativas de conexão não autorizadas.
-- Auditar contadores de pacotes (`pkts`) e bytes (`bytes`) para validação de telemetria e precedência de regras.
+Biblioteca prática e documentação técnica dos laboratórios de **Cyber Defense**, **Linux Hardening**, **Análise de Tráfego** e **Threat Hunting**.
 
 ---
 
-## 🧱 Arquitetura e Fluxo de Regras
+## 🗂️ Grade de Laboratórios Práticos
 
-```text
-               +------------------------------------+
-Entrada (SYN)  | Pacote TCP / ICMP chega à interface|
--------------->+------------------------------------+
-                                 |
-                                 v
-          +----------------------------------------------+
-          | Regra 1: LOG e Regra 2: DROP (Porta 8080)    | ---> [ Pacote descartado / Log gerado ]
-          +----------------------------------------------+
-                                 | (Se não der match)
-                                 v
-          +----------------------------------------------+
-          | Regra 3: ACCEPT conntrack ESTABLISHED,RELATED| ---> [ Tráfego de retorno liberado ]
-          +----------------------------------------------+
-                                 | (Se não der match)
-                                 v
-          +----------------------------------------------+
-          | Regra 4: ACCEPT Interface de Loopback (-i lo)| ---> [ Comunicação interna aceita ]
-          +----------------------------------------------+# Labs_Cyber_Cisco_Google_etc
+| # | Laboratório | Foco Técnico | Ferramentas / Comandos Principais |
+| :-: | :--- | :--- | :--- |
+| **01** | **Análise de Tráfego de Rede** | Inspeção de pacotes e redirecionamento HTTP/HTTPS | `Wireshark`, `TCP Stream`, `HTTP 301/302` |
+| **02** | **Reconhecimento de Superfície** | Varredura de portas e detecção de versões | `nmap -sS -sV -T4` |
+| **03** | **Forense e Auditoria de Logs** | Triagem de tentativas de força bruta e telemetria | `journalctl -u ssh`, `grep` |
+| **04** | **Hardening de Identidades** | Hashes protegidos e criptografia moderna | `/etc/passwd`, `/etc/shadow`, Yescrypt `$y$` |
+| **05** | **Controle de Acesso e Permissões** | Aplicação do Princípio do Menor Privilégio | `chmod 750`, `ls -l`, `Bash` |
+| **06** | **Threat Hunting: Bit SUID** | Caça a vetores de escalada de privilégios | `find / -perm -4000 -type f`, `GTFOBins` |
+| **07** | **Host Defense & Firewall** | Filtragem Stateful e contenção de tráfego | `iptables`, `conntrack`, `DROP/ACCEPT` |
+
+---
+
+## 🛠️ Detalhamento dos Módulos
+
+### 🔍 Módulo 1: Análise e Reconhecimento de Redes
+* **Lab 01 (Wireshark):** Inspeção de handshakes TCP e tráfego web com filtro `http || tls`.
+* **Lab 02 (Nmap):** Mapeamento de portas e versões de serviços:
+  ```bash
+  nmap -sS -sV -T4 <TARGET_IP>
