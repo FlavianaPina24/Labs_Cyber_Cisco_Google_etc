@@ -1,5 +1,3 @@
----
-
 ## 🧠 Base Teórica e Fundamentos Operacionais (SOC & Cyber Defense)
 
 ### 🔬 1. Análise de Malware, Sandboxes e Engenharia Reversa
