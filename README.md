@@ -4,10 +4,12 @@ Biblioteca prática e documentação técnica dos laboratórios de **Cyber Defen
 
 ---
 
+
 ## 🧭 Índice Geral dos Módulos
 
 | # | Módulo | Foco Técnico | Documento |
 | :-: | :--- | :--- | :--- |
+| **00** | **Fundamentos & Ferramentas** | Casos de uso, comandos e sintaxes operacionais | [Acessar Guia Teórico](00-Fundamentos-Teoricos/Guia-Ferramentas-Comandos.md) |
 | **01** | **Análise de Tráfego de Rede** | Inspeção de pacotes, handshakes e fluxos HTTP/HTTPS | [Acessar Lab 01](01-Network-Analysis/Lab01-Wireshark.md) |
 | **02** | **Reconhecimento de Superfície** | Varredura de portas e detecção de versões de serviços | [Acessar Lab 02](01-Network-Analysis/Lab02-Nmap.md) |
 | **03** | **Hardening de Identidades** | Hashes protegidos e estrutura do `/etc/shadow` | [Acessar Lab 03](02-System-Hardening/Lab03-Shadow-Audit.md) |
