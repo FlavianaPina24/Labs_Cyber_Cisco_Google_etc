@@ -1,5 +1,3 @@
----
-
 ## 🛠️ Guia Prático de Ferramentas e Comandos de Cibersegurança
 
 ### 🔬 1. Análise de Malware e Sandboxing
