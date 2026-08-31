@@ -20,13 +20,14 @@ Repositório técnico voltado para **Segurança Defensiva**, **Operações de SO
 | **09** | **Live Forensics & Processos** | Caça a ameaças, portas em `LISTEN`, análise de `/proc` e contenção | [Acessar Lab 09](07-Digital-Forensics/Lab09-Process-Network-Forensics.md) |
 | **10** | **Resposta Automatizada & Fail2ban** | Contenção dinâmica, políticas de `jail.local` e gestão de bans | [Acessar Lab 10](08-Incident-Response/Lab10-Fail2ban-Automation.md) |
 | **11** | **Integridade de Arquivos (FIM)** | Detecção de adulterações, hashes SHA-256 e baselines com `AIDE` | [Acessar Lab 11](09-File-Integrity-Monitoring/Lab11-AIDE-Integrity-Check.md) |
+| **12** | **Persistência & Threat Hunting** | Caça a artefatos em `Cron`, `Systemd services` e `SSH Authorized Keys` | [Acessar Lab 12](10-Threat-Hunting-Persistence/Lab12-Linux-Persistence-Artifacts.md) |
 ---
 
 ## 🛠️ Tecnologias e Ferramentas Praticadas
 
 * **Network Analysis:** Wireshark, Tshark, Nmap, TCP/IP, ICMP, HTTP/TLS
-* **Defesa & Detecção:** Snort 3 (NIDS), iptables (Firewall Stateful), Fail2ban (Dynamic Containment),AIDE (FIM)
-* **Threat Hunting & DFIR:** `ss`, `lsof`, `ps`, `/proc` inspection, GTFOBins audit, SUID hunt
+* **Defesa & Detecção:** Snort 3 (NIDS), iptables (Firewall Stateful), Fail2ban (Dynamic Containment), AIDE (FIM)
+* **Threat Hunting & DFIR:** `ss`, `lsof`, `ps`, `/proc` inspection, GTFOBins audit, SUID hunt, Cron & Systemd Persistence Hunting, SSH Key Auditing
 * **SOC & Log Analysis:** `journalctl`, `auth.log`, `wtmp/btmp`, `last`, `grep`, `awk`, `sort`, `uniq`
 * **Hardening:** Linux Access Control (`chmod`/`chown`), Shadow Password Policies, SSH Security
 ---
