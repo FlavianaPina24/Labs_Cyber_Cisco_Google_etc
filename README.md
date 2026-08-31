@@ -18,7 +18,7 @@ Repositório técnico voltado para **Segurança Defensiva**, **Operações de SO
 | **07** | **Detecção de Intrusão (NIDS)** | Assinaturas customizadas e alertas em tempo real com `Snort` | [Acessar Lab 07](05-Intrusion-Detection/Lab07-Snort-NIDS.md) |
 | **08** | **Investigação de Logs & SOC** | Análise de `auth.log`, força bruta SSH e pipelines no shell | [Acessar Lab 08](06-Log-Analysis-SOC/Lab08-Linux-Log-Investigation.md) |
 | **09** | **Live Forensics & Processos** | Caça a ameaças, portas em `LISTEN`, análise de `/proc` e contenção | [Acessar Lab 09](07-Digital-Forensics/Lab09-Process-Network-Forensics.md) |
-
+| **10** | **Resposta Automatizada & Fail2ban** | Contenção dinâmica, políticas de `jail.local` e gestão de bans | [Acessar Lab 10](08-Incident-Response/Lab10-Fail2ban-Automation.md) |
 ---
 
 ## 🛠️ Tecnologias e Ferramentas Praticadas
