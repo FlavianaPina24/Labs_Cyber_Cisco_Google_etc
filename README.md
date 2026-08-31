@@ -22,6 +22,7 @@ Repositório técnico voltado para **Segurança Defensiva**, **Operações de SO
 | **11** | **Integridade de Arquivos (FIM)** | Detecção de adulterações, hashes SHA-256 e baselines com `AIDE` | [Acessar Lab 11](09-File-Integrity-Monitoring/Lab11-AIDE-Integrity-Check.md) |
 | **12** | **Persistência & Threat Hunting** | Caça a artefatos em `Cron`, `Systemd services` e `SSH Authorized Keys` | [Acessar Lab 12](10-Threat-Hunting-Persistence/Lab12-Linux-Persistence-Artifacts.md) |
 | **13** | **Auditoria do Kernel (Auditd)** | Rastreamento de syscalls, monitoramento de credenciais e logs imutáveis com `auditd` / `ausearch` | [Acessar Lab 13](11-Kernel-Auditing-Auditd/Lab13-Auditd-Syscall-Tracking.md) |
+| **14** | **Kernel & Network Hardening** | Mitigação de SYN Flood, IP Spoofing e proteção de memória com `sysctl` | [Acessar Lab 14](12-Kernel-Hardening-Sysctl/Lab14-Kernel-Network-Hardening.md) |
 ---
 
 ## 🛠️ Tecnologias e Ferramentas Praticadas
@@ -30,7 +31,7 @@ Repositório técnico voltado para **Segurança Defensiva**, **Operações de SO
 * **Defesa & Detecção:** Snort 3 (NIDS), iptables (Firewall Stateful), Fail2ban (Dynamic Containment), AIDE (FIM), Auditd (Kernel Auditing)
 * **Threat Hunting & DFIR:** `ss`, `lsof`, `ps`, `/proc` inspection, GTFOBins audit, SUID hunt, Cron & Systemd Persistence Hunting, SSH Key Auditing, `ausearch`, `aureport`
 * **SOC & Log Analysis:** `journalctl`, `auth.log`, `wtmp/btmp`, `last`, `grep`, `awk`, `sort`, `uniq`
-* **Hardening:** Linux Access Control (`chmod`/`chown`), Shadow Password Policies, SSH Security
+* **Hardening:** Linux Access Control (`chmod`/`chown`), Shadow Password Policies, SSH Security, Kernel Tuning (`sysctl`)
 ---
 
 ## 🚀 Como Executar
