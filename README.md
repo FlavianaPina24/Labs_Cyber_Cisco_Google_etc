@@ -24,7 +24,7 @@ Repositório estruturado contendo laboratórios práticos, análises de pacotes 
 | **13** | **Auditoria do Kernel (Auditd)** | Rastreamento de syscalls, monitoramento de credenciais e logs com `auditd` | [Acessar Lab 13](11-Kernel-Auditing-Auditd/Lab13-Auditd-Syscall-Tracking.md) |
 | **14** | **Kernel & Network Hardening** | Mitigação de SYN Flood, IP Spoofing e proteção de memória com `sysctl` | [Acessar Lab 14](12-Kernel-Hardening-Sysctl/Lab14-Kernel-Network-Hardening.md) |
 | **15** | **Automação Forense (DFIR Triage)** | Coleta automatizada de evidências voláteis e cadeia de custódia SHA-256 | [Acessar Lab 15](13-DFIR-Automation/Lab15-Incident-Response-Triage-Collector.md) |
-
+| **16** | **Análise Estática & Strings (Trilha A)** | Extração de IOCs (C2, IPs, paths) e classificação ELF com `strings` e `file` | [Acessar Lab 16](14-Malware-Analysis-YARA/Lab01-Static-Analysis-Strings-Extraction.md) |
 ---
 
 ## 🛠️ Tecnologias e Ferramentas Praticadas
@@ -34,6 +34,7 @@ Repositório estruturado contendo laboratórios práticos, análises de pacotes 
 * **Threat Hunting & DFIR:** `ss`, `lsof`, `ps`, `/proc` inspection, GTFOBins audit, SUID hunt, Cron & Systemd Persistence Hunting, SSH Key Auditing, `ausearch`, `aureport`, Bash Incident Response Automation
 * **SOC & Log Analysis:** `journalctl`, `auth.log`, `wtmp/btmp`, `last`, `grep`, `awk`, `sort`, `uniq`
 * **Hardening:** Linux Access Control (`chmod`/`chown`), Shadow Password Policies, SSH Security, Kernel Tuning (`sysctl`)
+* **Malware Analysis & Reversing:** `strings`, `file`, `binutils`, `gcc`, ELF binary format, YARA
 ---
 
 ## 🚀 Como Executar
