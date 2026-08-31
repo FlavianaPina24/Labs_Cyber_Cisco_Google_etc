@@ -1,9 +1,8 @@
-# 📚 Cyber Defense & SOC Security Labs Library
+# 🛡️ Cyber Defense & SOC Security Labs Library
 
-Biblioteca prática e documentação técnica dos laboratórios de **Cyber Defense**, **Linux Hardening**, **Análise de Redes**, **Threat Hunting** e **Firewall Host-Based**.
+Repositório técnico voltado para **Segurança Defensiva**, **Operações de SOC (Security Operations Center)**, **Threat Hunting** e **Análise Forense (DFIR)**. Contém documentações completas, simulações controladas em ambiente Linux e evidências reais de execução de linha de comando.
 
 ---
-
 
 ## 🧭 Índice Geral dos Módulos
 
@@ -16,14 +15,19 @@ Biblioteca prática e documentação técnica dos laboratórios de **Cyber Defen
 | **04** | **Controle de Acesso** | Menor privilégio em scripts e permissões com `chmod` | [Acessar Lab 04](02-System-Hardening/Lab04-Permissions-Chmod.md) |
 | **05** | **Threat Hunting** | Auditoria de binários com bit SUID e prevenção GTFOBins | [Acessar Lab 05](03-Threat-Hunting/Lab05-SUID-Threat-Hunting.md) |
 | **06** | **Firewall & Contenção** | Filtragem Stateful e bloqueio de tráfego com `iptables` | [Acessar Lab 06](04-Firewall-Containment/Lab06-Iptables-Firewall.md) |
+| **07** | **Detecção de Intrusão (NIDS)** | Assinaturas customizadas e alertas em tempo real com `Snort` | [Acessar Lab 07](05-Intrusion-Detection/Lab07-Snort-NIDS.md) |
+| **08** | **Investigação de Logs & SOC** | Análise de `auth.log`, força bruta SSH e pipelines no shell | [Acessar Lab 08](06-Log-Analysis-SOC/Lab08-Linux-Log-Investigation.md) |
+| **09** | **Live Forensics & Processos** | Caça a ameaças, portas em `LISTEN`, análise de `/proc` e contenção | [Acessar Lab 09](07-Digital-Forensics/Lab09-Process-Network-Forensics.md) |
 
 ---
 
 ## 🛠️ Tecnologias e Ferramentas Praticadas
 
-- **Network:** Wireshark, Nmap, TCP/IP, ICMP, HTTP/TLS
-- **Linux Security:** `/etc/shadow`, Yescrypt (`$y$`), Permissões Octais (`chmod 750`), SUID Bits
-- **Defense & Containment:** Netfilter/iptables, Stateful Inspection (`conntrack`), Logging
+* **Network Analysis:** Wireshark, Tshark, Nmap, TCP/IP, ICMP, HTTP/TLS
+* **Defesa & Detecção:** Snort 3 (NIDS), iptables (Firewall Stateful)
+* **Threat Hunting & DFIR:** `ss`, `lsof`, `ps`, `/proc` inspection, GTFOBins audit, SUID hunt
+* **SOC & Log Analysis:** `journalctl`, `auth.log`, `wtmp/btmp`, `last`, `grep`, `awk`, `sort`, `uniq`
+* **Hardening:** Linux Access Control (`chmod`/`chown`), Shadow Password Policies, SSH Security
 
 ---
 
