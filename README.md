@@ -24,11 +24,10 @@ Repositório técnico voltado para **Segurança Defensiva**, **Operações de SO
 ## 🛠️ Tecnologias e Ferramentas Praticadas
 
 * **Network Analysis:** Wireshark, Tshark, Nmap, TCP/IP, ICMP, HTTP/TLS
-* **Defesa & Detecção:** Snort 3 (NIDS), iptables (Firewall Stateful)
+* **Defesa & Detecção:** Snort 3 (NIDS), iptables (Firewall Stateful), Fail2ban (Dynamic Containment)
 * **Threat Hunting & DFIR:** `ss`, `lsof`, `ps`, `/proc` inspection, GTFOBins audit, SUID hunt
 * **SOC & Log Analysis:** `journalctl`, `auth.log`, `wtmp/btmp`, `last`, `grep`, `awk`, `sort`, `uniq`
 * **Hardening:** Linux Access Control (`chmod`/`chown`), Shadow Password Policies, SSH Security
-
 ---
 
 ## 🚀 Como Executar
