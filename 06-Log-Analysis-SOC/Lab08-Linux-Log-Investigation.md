@@ -1,90 +1,125 @@
 # 🔍 Lab 08: Investigação de Incidentes e Análise de Logs do Sistema (SOC Workflow)
 
 ## 📌 Visão Geral
-A análise de logs é uma das atribuições mais críticas em operações de SOC (Security Operations Center). Este laboratório demonstra como extrair, filtrar e correlacionar eventos de autenticação, tentativas de força bruta e elevação de privilégios no Linux utilizando ferramentas nativas de auditoria de linha de comando (`grep`, `awk`, `journalctl` e `lastb`).
+A análise de logs é uma das atribuições centrais em operações de SOC (Security Operations Center). Este laboratório demonstra a simulação de uma tentativa de intrusão contra o serviço SSH, a inspeção forense dos eventos registrados em `/var/log/auth.log` e a criação de pipelines de agregação via linha de comando (`grep`, `awk`, `sort`, `uniq`) para ranquear atacantes e identificar anomalias.
 
 ---
 
 ## 🎯 Objetivos Técnicos
-- Mapear a localização e estrutura dos principais arquivos de log do Linux (`/var/log/auth.log`, `/var/log/syslog`, `/var/log/secure`).
-- Identificar e quantificar ataques de força bruta contra o serviço SSH.
-- Auditar sessões ativas e tentativas de autenticação inválidas via `utmp`/`btmp`.
-- Rastrear execuções de comandos com privilégios de root (`sudo`) para detecção de abuso de acesso.
+* Auditar sessões ativas e histórico do sistema via `/var/log/wtmp` com `last`.
+* Simular e mitigar problemas operacionais de conectividade do protocolo SSH.
+* Registrar tentativas reais de login não autorizado com usuários inexistentes.
+* Construir pipelines no shell para extrair os principais atacantes e contas visadas.
+* Auditar rastros de execução de comandos com privilégios administrativos (`sudo`).
 
 ---
 
-## 🧪 Topologia e Ferramentas
-- **Ambiente:** Linux (Debian / Kali / Ubuntu)
-- **Ferramentas:** `journalctl`, `last`, `lastb`, `grep`, `awk`, `cut`, `sort`, `uniq`
-- **Alvos de Auditoria:** `/var/log/auth.log`, `/var/log/syslog`
+## 🧪 Topologia e Ferramental
+* **Ambiente:** Kali Linux
+* **Serviços:** `sshd` (OpenSSH Server)
+* **Arquivos Auditados:** `/var/log/auth.log`, `/var/log/wtmp`
+* **Ferramental de Análise:** `grep`, `awk`, `sort`, `uniq`, `last`, `systemctl`
 
 ---
 
 ## 🚀 Passo a Passo Prático
 
-- **Auditar tentativas falhas de login (possível ataque de força bruta):**
+### 1. Auditoria do Histórico de Acessos (`last`)
+Auditoria das últimas sessões estabelecidas e eventos de boot registrados no arquivo binário `/var/log/wtmp`:
+
 ```bash
-sudo lastb -n 20
+last -n 5
+```
+
+**Evidência Operacional:**
+```text
+kali     tty7         :0               Sun Aug 30 22:59   still logged in
+reboot   system boot  6.3.0-kali1-amd6 Sun Aug 30 19:58   still running
+kali     tty7         :0               Sun Aug 30 18:35 - crash  (01:23)
+reboot   system boot  6.3.0-kali1-amd6 Sun Aug 30 15:34   still running
+reboot   system boot  6.3.0-kali1-amd6 Mon Aug 14 08:07 - 09:45  (01:37)
+
+wtmp begins Mon Aug 14 08:07:59 2023
 ```
 
 ---
 
-### 2. Investigação de Força Bruta SSH via `auth.log`
-O arquivo `/var/log/auth.log` registra eventos relacionados a identidade e autenticação.
+### 2. Inicialização do Serviço SSH e Ajuste de Configuração
+Garantir a execução do daemon SSH e remoção de opções depreciadas legadas (`ssh-dss`):
 
-- **Filtrar todas as falhas de autenticação SSH:**
 ```bash
-sudo grep "Failed password" /var/log/auth.log
+# Iniciar o daemon do SSH
+sudo systemctl start ssh
+
+# Fazer backup/remoção de chaves legadas locais
+mv ~/.ssh/config ~/.ssh/config.bak
 ```
 
-- **Extrair IPs atacantes e contar a quantidade de tentativas (Top Atacantes):**
+---
+
+### 3. Simulação de Ataque de Força Bruta
+Disparo de tentativa de autenticação com credencial inexistente (`usuario_fantasma`):
+
+```bash
+ssh usuario_fantasma@127.0.0.1
+```
+
+**Evidência de Rejeição de Acesso:**
+```text
+usuario_fantasma@127.0.0.1's password: 
+Permission denied, please try again.
+usuario_fantasma@127.0.0.1's password: 
+Permission denied, please try again.
+usuario_fantasma@127.0.0.1's password: 
+usuario_fantasma@127.0.0.1: Permission denied (publickey,password).
+```
+
+---
+
+### 4. Análise Forense do Log de Autenticação (`/var/log/auth.log`)
+
+#### A. Rastrear o Incidente do Usuário Inexistente
+```bash
+sudo grep "usuario_fantasma" /var/log/auth.log
+```
+
+**Resultado nos Logs:**
+```text
+2026-08-31T00:01:08.247810+00:00 Kali sshd-session[65492]: Invalid user usuario_fantasma from 127.0.0.1 port 57268
+2026-08-31T00:01:15.587994+00:00 Kali sshd-session[65492]: Failed password for invalid user usuario_fantasma from 127.0.0.1 port 57268 ssh2
+2026-08-31T00:01:22.112612+00:00 Kali sshd-session[65492]: Failed password for invalid user usuario_fantasma from 127.0.0.1 port 57268 ssh2
+2026-08-31T00:01:34.081289+00:00 Kali sshd-session[65492]: Failed password for invalid user usuario_fantasma from 127.0.0.1 port 57268 ssh2
+2026-08-31T00:01:34.713140+00:00 Kali sshd-session[65492]: Connection closed by invalid user usuario_fantasma 127.0.0.1 port 57268 [preauth]
+2026-08-31T00:02:16.249350+00:00 Kali sudo:    kali : TTY=pts/0 ; PWD=/home/kali ; USER=root ; COMMAND=/usr/bin/grep usuario_fantasma /var/log/auth.log
+```
+
+---
+
+### 5. Pipelines SOC: Agregação e Ranqueamento de Ameaças
+
+#### Ranking 1: Contagem de Tentativas por IP Atacante
 ```bash
 sudo grep "Failed password" /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr
 ```
 
-- **Identificar usuários inexistentes visados no ataque:**
+**Saída Agregada:**
+```text
+3 127.0.0.1
+```
+
+#### Ranking 2: Usuários Inválidos mais Visados no Ataque
 ```bash
 sudo grep "Invalid user" /var/log/auth.log | awk '{print $(NF-2)}' | sort | uniq -c | sort -nr
 ```
 
----
-
-### 3. Monitoramento de Elevação de Privilégios (`sudo` Abuse)
-Identificar quais comandos foram executados por usuários comuns utilizando `sudo`:
-
-- **Filtrar execuções de comandos com `sudo`:**
-```bash
-sudo grep "COMMAND=" /var/log/auth.log | awk -F "COMMAND=" '{print $2}'
-```
-
-- **Auditar tentativas de uso de `sudo` sem autorização (Incidentes de Segurança):**
-```bash
-sudo grep "authentication failure" /var/log/auth.log
+**Saída Agregada:**
+```text
+1 127.0.0.1
 ```
 
 ---
 
-### 4. Análise com `journalctl` (Systemd Journal)
-Em distribuições modernas, o `systemd-journald` indexa logs estruturados do sistema.
-
-- **Verificar eventos do serviço SSH em tempo real:**
-```bash
-sudo journalctl -u ssh -f
-```
-
-- **Filtrar apenas mensagens com severidade de Erro/Crítico (Prioridade 0 a 3):**
-```bash
-sudo journalctl -p err..emerg -n 30
-```
-
-- **Buscar eventos de segurança ocorridos nas últimas 2 horas:**
-```bash
-sudo journalctl --since "2 hours ago" -u ssh
-```
-
----
-
-## 🛡️ Lições Aprendidas e Ações de Resposta a Incidentes (Blue Team)
-1. **Contenção Automatizada:** IPs detectados no Top Atacantes de SSH devem ser inseridos automaticamente em regras de bloqueio com `fail2ban` ou `iptables`.
-2. **Hardening de SSH:** Desativar login de root direto (`PermitRootLogin no`) e restringir autenticação exclusivamente para chaves criptográficas (`PasswordAuthentication no`).
-3. **Imutabilidade de Logs:** Em arquiteturas corporativas, os arquivos de log locais devem ser encaminhados em tempo real para um servidor Syslog central ou SIEM para evitar que um invasor com privilégios de root apague os rastros (`log wiping`).
+## 🛡️ Conclusões e Medidas de Contenção (Blue Team)
+1. **Auditoria de Linha de Comando:** O encadeamento de comandos Unix (`grep`, `awk`, `sort`, `uniq`) viabiliza triagens rápidas no SOC sem necessidade imediata de interfaces gráficas.
+2. **Correlação de Identidades:** Falhas de autenticação associadas a `Invalid user` indicam atividade de enumeração de contas (*account harvesting*).
+3. **Respostas Automáticas:** IPs reincidentes devem ser bloqueados automaticamente via regras de `fail2ban` ou ACLs restritivas de firewall (`iptables`).
