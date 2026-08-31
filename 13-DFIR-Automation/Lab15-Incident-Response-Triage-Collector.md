@@ -82,7 +82,7 @@ sudo chmod +x /usr/local/bin/dfir_collector.sh
 ---
 
 ### 2. Execução da Coleta ao Vivo
-Execução com privilégios de root para acesso irrestrito aos ponteiros do `/proc`:
+Execução com privilégios de root para acesso irrestrito aos descritores do `/proc`:
 
 ```bash
 sudo /usr/local/bin/dfir_collector.sh
@@ -124,6 +124,24 @@ drwxr-xr-x root/root         0 2026-08-31 02:40 dfir_case_20260831_024027/
 -rw-r--r-- root/root       272 2026-08-31 02:40 dfir_case_20260831_024027/active_sessions.txt
 -rw-r--r-- root/root       164 2026-08-31 02:40 dfir_case_20260831_024027/system_info.txt
 ```
+
+---
+
+## 🔍 Análise Detalhada dos Artefatos Coletados (DFIR Triage)
+
+| Artefato Coletado | Comando / Origem | Finalidade e Relevância Forense |
+| :--- | :--- | :--- |
+| **`system_info.txt`** | `uname -a`, `uptime` | Identifica a versão exata do kernel, arquitetura do processador e tempo de atividade contínua da máquina para determinar se o host sofreu reinicializações recentes. |
+| **`active_sessions.txt`** | `who -a` | Registra os usuários autenticados no momento da coleta, os terminais associados (TTY/PTS) e os endereços IP de origem das conexões ativas. |
+| **`listening_ports.txt`** | `ss -tulpn` | Mapeia todas as portas TCP e UDP em estado de escuta (`LISTEN`), permitindo a identificação imediata de serviços não autorizados ou backdoors. |
+| **`active_network_connections.txt`** | `ss -tanp` | Rastreia todas as conexões de rede estabelecidas (`ESTABLISHED`), identificando comunicações com servidores de Comando e Controle (C2) e destinos externos. |
+| **`routing_table.txt`** | `ip route` | Audita a tabela de roteamento local para verificar tentativas de sequestro de tráfego, manipulação de gateway padrão ou desvios via túneis maliciosos. |
+| **`process_tree.txt`** | `ps auxf` | Captura a árvore hierárquica completa de processos em execução na memória, permitindo correlacionar processos-filho suspeitos aos seus processos-pai executores. |
+| **`open_network_files.txt`** | `lsof -i -P -n` | Correlaciona processos a descritores de arquivos e sockets de rede, indicando o binário exato responsável por cada comunicação aberta. |
+| **`passwd.txt`** | `/etc/passwd` | Cópia estática da base de contas locais para auditar a criação de usuários clandestinos, shells não convencionais ou contas com UID 0 (privilégios de root). |
+| **`cron_persistence.txt`** | `/etc/cron*`, `/var/spool/cron/` | Mapeia diretórios e tabelas de agendamento de tarefas do sistema e de usuários, identificando rotinas de persistência periódica. |
+| **`systemd_services.txt`** | `/etc/systemd/system/` | Lista arquivos de serviço customizados instalados no sistema, permitindo detectar daemons e agentes de persistência que inicializam durante o boot. |
+| **Hash SHA-256 (`.sha256`)** | `sha256sum` | Atua como o selo de custódia criptográfica do pacote de evidências (`.tar.gz`), assegurando a integridade dos dados e prevenindo adulterações durante a cadeia de custódia. |
 
 ---
 
